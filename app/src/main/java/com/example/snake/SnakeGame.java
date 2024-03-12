@@ -1,7 +1,10 @@
 package com.example.snake;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,12 +13,18 @@ import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
 import java.io.IOException;
 
-class SnakeGame extends SurfaceView implements Runnable{
+class SnakeGame extends SurfaceView implements Runnable {
 
     // Objects for the game loop/thread
     private Thread mThread = null;
@@ -46,6 +55,11 @@ class SnakeGame extends SurfaceView implements Runnable{
     private Snake mSnake;
     // And an apple
     private Apple mApple;
+    private ImageButton pauseButton;
+    private int buttonWidth;
+    private int buttonHeight;
+    private int buttonX;
+    private int buttonY;
 
     // This is the constructor method that gets called
     // from SnakeActivity
@@ -103,6 +117,17 @@ class SnakeGame extends SurfaceView implements Runnable{
                         mNumBlocksHigh),
                 blockSize);
 
+        pauseButton = new ImageButton(context);
+        pauseButton.setBackgroundResource(R.drawable.ic_action_pause);
+        buttonX = size.x - buttonWidth - 20;
+        buttonY = 20;
+
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams
+                (RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(buttonX, buttonY, 0, 0);
+        pauseButton.setLayoutParams(layoutParams);
+
+        ImageButton imageButton = findViewById(R.id.imageButton);
     }
 
     // Called to start a new game
@@ -131,7 +156,6 @@ class SnakeGame extends SurfaceView implements Runnable{
                     update();
                 }
             }
-
             draw();
         }
     }
@@ -188,7 +212,6 @@ class SnakeGame extends SurfaceView implements Runnable{
             mPaused =true;
         }
 
-
     }
 
     // Do all the drawing
@@ -206,6 +229,9 @@ class SnakeGame extends SurfaceView implements Runnable{
 
             // Draw the score
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
+
+            // Draw the button
+            pauseButton.draw(mCanvas);
 
             // Draw the apple and the snake
             mApple.draw(mCanvas, mPaint);
@@ -227,7 +253,6 @@ class SnakeGame extends SurfaceView implements Runnable{
 
             }
 
-
             // Unlock the Canvas to show graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
@@ -240,12 +265,10 @@ class SnakeGame extends SurfaceView implements Runnable{
                 if (mPaused) {
                     mPaused = false;
                     newGame();
-
                     // Don't want to process snake
                     // direction for this tap
                     return true;
                 }
-
                 // Let the Snake class handle the input
                 mSnake.switchHeading(motionEvent);
                 break;
@@ -260,13 +283,17 @@ class SnakeGame extends SurfaceView implements Runnable{
     // Stop the thread
     public void pause() {
         mPlaying = false;
-        try {
-            mThread.join();
-        } catch (InterruptedException e) {
-            // Error
+        while(true) {
+            try {
+                mThread.join();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            break;
         }
+        mThread = null;
     }
-
 
     // Start the thread
     public void resume() {
@@ -274,6 +301,4 @@ class SnakeGame extends SurfaceView implements Runnable{
         mThread = new Thread(this);
         mThread.start();
     }
-
-
 }

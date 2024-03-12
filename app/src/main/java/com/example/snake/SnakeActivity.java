@@ -3,13 +3,17 @@ package com.example.snake;
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 
 public class SnakeActivity extends Activity {
 
     // Declare an instance of SnakeGame
     SnakeGame mSnakeGame;
+    private ImageButton pauseButton;
 
     // Set the game up
     @Override
@@ -17,6 +21,14 @@ public class SnakeActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_main);
+        pauseButton = (ImageButton)findViewById(R.id.imageButton);
+        pauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("BUTTONS", "Player hit pause");
+            }
+        });
 
         // Get the pixel dimensions of the screen
         Display display = getWindowManager().getDefaultDisplay();

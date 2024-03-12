@@ -9,6 +9,8 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import java.util.ArrayList;
 
 class Snake {
@@ -191,6 +193,7 @@ class Snake {
                             segmentLocations.get(i).y) {
 
                 dead = true;
+                break;
             }
         }
         return dead;
@@ -259,50 +262,47 @@ class Snake {
                         segmentLocations.get(i).y
                                 * mSegmentSize, paint);
             }
-
-
         }
     }
 
     // Handle changing direction
     void switchHeading(MotionEvent motionEvent) {
-
-        // Is the tap on the right hand side?
+        // Is the tap on the right hand side? If so -- rotate right
         if (motionEvent.getX() >= halfWayPoint) {
-            switch (heading) {
-                // Rotate right
-                case UP:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.UP;
-                    break;
-
-            }
-        } else {
-            // Rotate left
-            switch (heading) {
-                case UP:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.UP;
-                    break;
-            }
+            heading = rotateClockwise(heading);
+        }
+        // rotate left
+        else {
+            heading = rotateCounterClockwise(heading);
         }
     }
 
+    /*
+    Ordinal values:
+    UP - 0
+    DOWN - 1
+    RIGHT - 2
+    LEFT - 3
+     */
 
+    private Heading rotateClockwise(Heading currDirection) {
+        //grab the current ordinal value and convert it into an int
+        int index = currDirection.ordinal();
+
+        //rotate clockwise: increment the ordinal by one. Modulo is to keep within array boundaries
+        index = (index + 1) % 4;
+
+        //convert back to enum
+        return Heading.values()[index];
+    }
+
+    private Heading rotateCounterClockwise(Heading currDirection) {
+        //grab the current ordinal value and convert it into an int
+        int index = currDirection.ordinal();
+
+        //rotate counter clockwise: deincrement the ordinal by one, and add by 4 to ensure the
+        //value is always positive. Modulo is to keep within array boundaries
+        index = (index - 1 + 4) % 4;
+        return Heading.values()[index];
+    }
 }
