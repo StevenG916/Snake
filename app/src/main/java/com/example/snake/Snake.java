@@ -11,7 +11,8 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake {
+class Snake implements Drawable {
+
 
     // The location in the grid of all the segments
     private ArrayList<Point> segmentLocations;
@@ -24,7 +25,7 @@ class Snake {
 
     // Where is the center of the screen
     // horizontally in pixels?
-    private int halfWayPoint;
+    public int halfWayPoint;
 
     // For tracking movement Heading
     private enum Heading {
@@ -212,7 +213,7 @@ class Snake {
         return false;
     }
 
-    void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint) {
         // Don't run this code if ArrayList has nothing in it
         if (!segmentLocations.isEmpty()) {
             // All the code from this method goes here
@@ -303,6 +304,11 @@ class Snake {
             }
         }
     }
+
+    public int getHalfWayPoint() {
+        return halfWayPoint;
+    }
+
 
 
 }

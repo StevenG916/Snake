@@ -1,6 +1,8 @@
 package com.example.snake;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
@@ -30,6 +32,8 @@ public class SnakeActivity extends Activity {
 
         // Make snakeEngine the view of the Activity
         setContentView(mSnakeGame);
+
+
     }
 
     // Start the thread in snakeEngine
