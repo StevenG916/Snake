@@ -215,7 +215,7 @@ class Snake {
         return false;
     }
 
-    void draw(Canvas canvas, Paint paint) {
+    public void draw(Canvas canvas, Paint paint) {
         // Don't run this code if ArrayList has nothing in it
         if (!segmentLocations.isEmpty()) {
             // All the code from this method goes here
@@ -294,6 +294,11 @@ class Snake {
 
         //convert back to enum
         return Heading.values()[index];
+    }
+
+
+    public int getHalfWayPoint() {
+        return halfWayPoint;
     }
 
     private Heading rotateCounterClockwise(Heading currDirection) {

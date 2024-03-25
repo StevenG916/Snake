@@ -40,13 +40,11 @@ class Apple extends GameObject implements Drawable{
         //position.x = -10;
 
         // Load the image to the bitmap
-        mBitmapApple = BitmapFactory
-                .decodeResource(context.getResources(),
+        mBitmapApple = BitmapFactory.decodeResource(context.getResources(),
                         R.drawable.apple);
 
         // Resize the bitmap
-        mBitmapApple = Bitmap
-                .createScaledBitmap(mBitmapApple, size, size, false);
+        mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, size, size, false);
     }
 
     // This is called every time an apple is eaten
@@ -82,7 +80,7 @@ class Apple extends GameObject implements Drawable{
 
     // Draw the apple
 
-    void draw(Canvas canvas, Paint paint){
+    public void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(mBitmapApple,
                 position.x * size, position.y * size, paint);
 
@@ -92,8 +90,12 @@ class Apple extends GameObject implements Drawable{
         // Update logic here, if necessary for the apple (likely empty)
     }
 
-    @Override
-    public void draw(Canvas canvas) {
+    //@Override
+    /*public void draw(Canvas canvas, Paint paint) {
+        if (mBitmapApple == null){
 
-    }
+        }
+        canvas.drawBitmap(mBitmapApple, position.x * size, position.y * size, paint);
+
+    }*/
 }
