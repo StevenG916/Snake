@@ -9,8 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
 
-import androidx.constraintlayout.widget.ConstraintSet;
-
 import java.util.ArrayList;
 
 class Snake {
@@ -295,7 +293,6 @@ class Snake {
         //convert back to enum
         return Heading.values()[index];
     }
-
 
     public int getHalfWayPoint() {
         return halfWayPoint;

@@ -52,8 +52,6 @@ class Apple extends GameObject implements Drawable{
         // Choose two random values and place the apple
         Random random = new Random();
         if (spawnRange.x > 0 && spawnRange.y > 0) {
-
-
             position.x = random.nextInt(spawnRange.x) + 1;
             position.y = random.nextInt(spawnRange.y - 1) + 1;
         } else {
@@ -64,11 +62,23 @@ class Apple extends GameObject implements Drawable{
     }
 
     // Overloaded spawn method with random characteristics
-    void spawn(int size) {
+//    void spawn(int size) {
+//        Random random = new Random();
+//        position.x = random.nextInt(spawnRange.x) + 1;
+//        position.y = random.nextInt(spawnRange.y - 1) + 1;
+//        this.size = size;
+//    }
+    void spawn(boolean appleEaten) {
+        //spawn a new apple
         Random random = new Random();
-        position.x = random.nextInt(spawnRange.x) + 1;
-        position.y = random.nextInt(spawnRange.y - 1) + 1;
-        this.size = size; // Update size based on the parameter
+        if (spawnRange.x > 0 && spawnRange.y > 0) {
+            position.x = random.nextInt(spawnRange.x) + 1;
+            position.y = random.nextInt(spawnRange.y - 1) + 1;
+        } else {
+            // Log an error or set default values if spawnRange is not correctly initialized
+            Log.e("Apple", "spawnRange must be positive, but was: " + spawnRange);
+            // Optionally set default spawn position or handle the error as appropriate
+        }
 
     }
 
@@ -89,13 +99,4 @@ class Apple extends GameObject implements Drawable{
     public void update() {
         // Update logic here, if necessary for the apple (likely empty)
     }
-
-    //@Override
-    /*public void draw(Canvas canvas, Paint paint) {
-        if (mBitmapApple == null){
-
-        }
-        canvas.drawBitmap(mBitmapApple, position.x * size, position.y * size, paint);
-
-    }*/
 }

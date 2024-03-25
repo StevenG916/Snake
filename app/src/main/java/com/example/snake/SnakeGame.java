@@ -77,8 +77,6 @@ class SnakeGame extends SurfaceView implements Runnable {
         textPaint.setTextSize(50); // Set the text size
         textPaint.setTextAlign(Paint.Align.RIGHT); // Align text to the right
 
-
-
         // Initialize the SoundPool
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes =
@@ -153,11 +151,9 @@ class SnakeGame extends SurfaceView implements Runnable {
                     update();
                 }
             }
-
             draw();
         }
     }
-
 
     // Check to see if it is time for an update
     public boolean updateRequired() {
@@ -185,7 +181,6 @@ class SnakeGame extends SurfaceView implements Runnable {
 
     // Update all the game objects
     public void update() {
-
         // Move the snake
         mSnake.move();
 
@@ -193,7 +188,8 @@ class SnakeGame extends SurfaceView implements Runnable {
         if(mSnake.checkDinner(mApple.getLocation())){
             // This reminds me of Edge of Tomorrow.
             // One day the apple will be ready!
-            mApple.spawn();
+
+            mApple.spawn(true);
 
             // Add to  mScore
             mScore = mScore + 1;
@@ -209,8 +205,6 @@ class SnakeGame extends SurfaceView implements Runnable {
 
             mPaused =true;
         }
-
-
     }
 
     // Do all the drawing
@@ -266,37 +260,24 @@ class SnakeGame extends SurfaceView implements Runnable {
 
             // Unlock the Canvas to show graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
-
-
         }
-
     }
-
-
-
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
 
         Log.d("SnakeGame", "Touch event X: " + motionEvent.getX() + ", Y: " + motionEvent.getY() + ", Halfway Point: " + mSnake.getHalfWayPoint());
-        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_UP:
-                if (mPaused) {
-                    mPaused = false;
-                    newGame();
-                    performClick();
+        if ((motionEvent.getAction() & MotionEvent.ACTION_MASK) == MotionEvent.ACTION_UP) {
+            if (mPaused) {
+                mPaused = false;
+                newGame();
+                performClick();
 
-                    // Don't want to process snake
-                    // direction for this tap
-                    return true;
-                }
+                // Don't want to process snake direction for this tap
+                return true;
+            }
 
-                // Let the Snake class handle the input
-                mSnake.switchHeading(motionEvent);
-                break;
-
-            /*default:
-                break;*/
-
+            // Let the Snake class handle the input
+            mSnake.switchHeading(motionEvent);
         }
         return true;
     }
@@ -316,7 +297,6 @@ class SnakeGame extends SurfaceView implements Runnable {
         mThread = null;
     }
 
-
     // Start the thread
     public void resume() {
         mPlaying = true;
@@ -327,6 +307,4 @@ class SnakeGame extends SurfaceView implements Runnable {
     public boolean performClick() {
         return super.performClick();
     }
-
-
 }
