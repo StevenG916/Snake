@@ -7,8 +7,6 @@ abstract class GameObject {
     protected Point spawnRange;
     protected int size;
 
-
-
     public GameObject(Point position, int size) {
         this.position = new Point();
         this.size = size;

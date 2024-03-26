@@ -11,8 +11,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake implements Drawable {
-
+class Snake {
 
     // The location in the grid of all the segments
     private ArrayList<Point> segmentLocations;
@@ -25,7 +24,7 @@ class Snake implements Drawable {
 
     // Where is the center of the screen
     // horizontally in pixels?
-    public int halfWayPoint;
+    private int halfWayPoint;
 
     // For tracking movement Heading
     private enum Heading {
@@ -192,6 +191,7 @@ class Snake implements Drawable {
                             segmentLocations.get(i).y) {
 
                 dead = true;
+                break;
             }
         }
         return dead;
@@ -260,55 +260,51 @@ class Snake implements Drawable {
                         segmentLocations.get(i).y
                                 * mSegmentSize, paint);
             }
-
-
         }
     }
 
     // Handle changing direction
     void switchHeading(MotionEvent motionEvent) {
-
-        // Is the tap on the right hand side?
+        // Is the tap on the right hand side? If so -- rotate right
         if (motionEvent.getX() >= halfWayPoint) {
-            switch (heading) {
-                // Rotate right
-                case UP:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.UP;
-                    break;
-
-            }
-        } else {
-            // Rotate left
-            switch (heading) {
-                case UP:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.UP;
-                    break;
-            }
+            heading = rotateClockwise(heading);
         }
+        // rotate left
+        else {
+            heading = rotateCounterClockwise(heading);
+        }
+    }
+
+    /*
+    Ordinal values:
+    UP - 0
+    DOWN - 1
+    RIGHT - 2
+    LEFT - 3
+     */
+
+    private Heading rotateClockwise(Heading currDirection) {
+        //grab the current ordinal value and convert it into an int
+        int index = currDirection.ordinal();
+
+        //rotate clockwise: increment the ordinal by one. Modulo is to keep within array boundaries
+        index = (index + 1) % 4;
+
+        //convert back to enum
+        return Heading.values()[index];
     }
 
     public int getHalfWayPoint() {
         return halfWayPoint;
     }
 
+    private Heading rotateCounterClockwise(Heading currDirection) {
+        //grab the current ordinal value and convert it into an int
+        int index = currDirection.ordinal();
 
-
+        //rotate counter clockwise: deincrement the ordinal by one, and add by 4 to ensure the
+        //value is always positive. Modulo is to keep within array boundaries
+        index = (index - 1 + 4) % 4;
+        return Heading.values()[index];
+    }
 }

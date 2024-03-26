@@ -1,12 +1,10 @@
 package com.example.snake;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
-import android.view.Window;
 
 public class SnakeActivity extends Activity {
 
@@ -16,9 +14,7 @@ public class SnakeActivity extends Activity {
     // Set the game up
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // Get the pixel dimensions of the screen
         Display display = getWindowManager().getDefaultDisplay();
@@ -32,13 +28,12 @@ public class SnakeActivity extends Activity {
 
         // Make snakeEngine the view of the Activity
         setContentView(mSnakeGame);
-
-
     }
 
     // Start the thread in snakeEngine
     @Override
     protected void onResume() {
+        Log.d("SnakeActivity.java", "onResume()");
         super.onResume();
         mSnakeGame.resume();
     }
@@ -46,6 +41,7 @@ public class SnakeActivity extends Activity {
     // Stop the thread in snakeEngine
     @Override
     protected void onPause() {
+        Log.d("SnakeActivity.java", "onPause()");
         super.onPause();
         mSnakeGame.pause();
     }
