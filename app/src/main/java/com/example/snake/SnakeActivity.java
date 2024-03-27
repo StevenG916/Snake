@@ -10,6 +10,7 @@ public class SnakeActivity extends Activity {
 
     // Declare an instance of SnakeGame
     SnakeGame mSnakeGame;
+    boolean mWasGamePaused;
 
     // Set the game up
     @Override
@@ -28,6 +29,7 @@ public class SnakeActivity extends Activity {
 
         // Make snakeEngine the view of the Activity
         setContentView(mSnakeGame);
+        mSnakeGame.addPauseButton(this);
     }
 
     // Start the thread in snakeEngine
@@ -35,14 +37,25 @@ public class SnakeActivity extends Activity {
     protected void onResume() {
         Log.d("SnakeActivity.java", "onResume()");
         super.onResume();
-        mSnakeGame.resume();
+        // Optionally resume the game
+
+        if (mSnakeGame != null && mWasGamePaused) {
+            mSnakeGame.resume();
+            mWasGamePaused = false;
+        }
     }
 
-    // Stop the thread in snakeEngine
-    @Override
-    protected void onPause() {
-        Log.d("SnakeActivity.java", "onPause()");
-        super.onPause();
-        mSnakeGame.pause();
+        // Stop the thread in snakeEngine
+        @Override
+        protected void onPause () {
+            Log.d("SnakeActivity.java", "onPause()");
+            super.onPause();
+            // Pause the game
+            if (mSnakeGame != null) {
+                mSnakeGame.pause();
+                mWasGamePaused = true;
+            }
+        }
+
+
     }
-}

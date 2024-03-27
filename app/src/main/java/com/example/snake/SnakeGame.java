@@ -15,11 +15,13 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.util.Log;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
@@ -285,16 +287,17 @@ class SnakeGame extends SurfaceView implements Runnable {
     // Stop the thread
     public void pause() {
         mPlaying = false;
-        while(true) {
+
+        if(mThread != null) {
             try {
                 mThread.join();
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            break;
+            mThread = null;
         }
-        mThread = null;
+
     }
 
     // Start the thread
@@ -303,8 +306,47 @@ class SnakeGame extends SurfaceView implements Runnable {
         mThread = new Thread(this);
         mThread.start();
     }
+
+
     @Override
     public boolean performClick() {
         return super.performClick();
     }
-}
+
+    public void addPauseButton(Context context) {
+        ImageButton pauseButton = new ImageButton(context);
+        pauseButton.setImageResource(R.drawable.ic_action_pause); // Your pause button drawable
+        pauseButton.setBackgroundColor(Color.TRANSPARENT); // Optionally make the button background transparent
+
+        // Define layout parameters to position your button - let's say at the top-right corner
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                Gravity.TOP | Gravity.END
+        );
+        int margin = getResources().getDimensionPixelSize(R.dimen.pause_button_margin); // Define a margin in your dimens.xml
+        layoutParams.setMargins(margin, margin, margin, margin);
+
+        // Add this view to the SurfaceView's parent (which should be a FrameLayout or similar)
+        ((ViewGroup) this.getParent()).addView(pauseButton, layoutParams);
+
+        // Set the click listener to pause the game
+        pauseButton.setOnClickListener(v -> {
+            if(mPlaying && !mPaused) {
+                // Game is currently playing, so pause it
+                pause();
+                pauseButton.setImageResource(R.drawable.ic_action_pause); // Change icon to play/resume
+            } else {
+                // Game is paused, so resume it
+                resume();
+                pauseButton.setImageResource(R.drawable.ic_action_pause); // Change back to pause icon
+            }
+        });
+    }
+
+    }
+
+
+
+
+
