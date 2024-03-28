@@ -233,15 +233,14 @@ class Snake {
         return halfWayPoint;
     }
 
+    /*
+    Rotate counter clockwise:
+    Deincrement the ordinal by one, and add by 4 to ensure the value is always positive.
+    Modulo is used to keep within array boundaries.
+     */
     private Heading rotateCounterClockwise(Heading currDirection) {
         //grab the current ordinal value and convert it into an int
         int index = currDirection.ordinal();
-
-        /*
-        Rotate counter clockwise:
-        Deincrement the ordinal by one, and add by 4 to ensure the value is always positive.
-        Modulo is used to keep within array boundaries.
-         */
         index = (index - 1 + 4) % 4;
         return Heading.values()[index];
     }
