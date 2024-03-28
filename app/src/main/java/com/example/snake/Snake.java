@@ -98,19 +98,14 @@ class Snake {
     Get the Snake ready for a new game
      */
     void reset(int w, int h) {
-        /*
-        Reset the heading
-         */
+
+        //Reset the heading
         heading = Heading.RIGHT;
 
-        /*
-        Clear the ArrayList of old contents
-         */
+        //Clear the ArrayList of old contents
         segmentLocations.clear();
 
-        /*
-        Add a single segment to the snake
-         */
+        //Add a single segment to the snake
         segmentLocations.add(new Point(w / 2, h / 2));
     }
 
@@ -150,22 +145,15 @@ class Snake {
         segmentLocations.set(0, p);
     }
 
+    //Determine if the edge of the screen has been hit
     boolean detectDeath() {
-        boolean dead = segmentLocations.get(0).x == -1 ||
-                segmentLocations.get(0).x > mMoveRange.x ||
-                segmentLocations.get(0).y == -1 ||
-                segmentLocations.get(0).y > mMoveRange.y;
-        /*
-        Determine if the edge of the screen has been hit
-         */
-        /*
-        Determine if the snake has eaten itself via collision
-         */
+        boolean dead = segmentLocations.get(0).x == -1 || segmentLocations.get(0).x > mMoveRange.x ||
+                segmentLocations.get(0).y == -1 || segmentLocations.get(0).y > mMoveRange.y;
+
+        // Determine if the snake has eaten itself via collision
         for (int i = segmentLocations.size() - 1; i > 0; i--) {
-            if (segmentLocations.get(0).x ==
-                    segmentLocations.get(i).x &&
-                    segmentLocations.get(0).y ==
-                            segmentLocations.get(i).y) {
+            if (segmentLocations.get(0).x == segmentLocations.get(i).x && segmentLocations.get(0).y
+                    == segmentLocations.get(i).y) {
                 dead = true;
                 break;
             }
@@ -210,7 +198,7 @@ class Snake {
         }
     }
 
-    // Handle changing direction
+    // Handles changing direction
     void switchHeading(MotionEvent motionEvent) {
         // Is the tap on the right hand side? If so --> rotate right
         if (motionEvent.getX() >= halfWayPoint) {
