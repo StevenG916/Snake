@@ -34,8 +34,7 @@ class Apple extends GameObject implements Drawable{
         this.spawnRange = spawnRange;
 
         // Load the image to the bitmap
-        mBitmapApple = BitmapFactory.decodeResource(context.getResources(),
-                        R.drawable.apple);
+        mBitmapApple = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple);
 
         // Resize the bitmap
         mBitmapApple = Bitmap.createScaledBitmap(mBitmapApple, size, size, false);
@@ -52,9 +51,7 @@ class Apple extends GameObject implements Drawable{
             position.x = random.nextInt(spawnRange.x) + 1;
             position.y = random.nextInt(spawnRange.y - 1) + 1;
         } else {
-            // Log an error or set default values if spawnRange is not correctly initialized
             Log.e("Apple", "spawnRange must be positive, but was: " + spawnRange);
-            // Optionally set default spawn position or handle the error as appropriate
         }
     }
 
