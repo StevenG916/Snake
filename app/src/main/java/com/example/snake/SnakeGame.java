@@ -284,7 +284,7 @@ class SnakeGame extends SurfaceView implements Runnable {
     // Method for button functionality
     public void addPauseButton(Context context) {
         ImageButton pauseButton = new ImageButton(context);
-        pauseButton.setImageResource(R.drawable.baseline_pause_circle_24); // Your pause button drawable
+        pauseButton.setImageResource(R.drawable.baseline_pause_circle_24);
         pauseButton.setBackgroundColor(Color.TRANSPARENT);
 
         // Lock the button to the bottom-right
