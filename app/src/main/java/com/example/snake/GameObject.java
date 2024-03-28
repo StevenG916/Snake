@@ -1,3 +1,11 @@
+/*
+Savannah Birdsong-See
+Steven Graham
+
+CSC 133 - Assignment 3
+Snake Game
+ */
+
 package com.example.snake;
 
 import android.graphics.Point;
@@ -13,16 +21,10 @@ abstract class GameObject {
         this.spawnRange = new Point();
     }
 
-    public Point getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point newPosition) {
-        this.position = newPosition;
-    }
-
-    // Abstract method to be implemented by subclasses
+    /*
+    Abstract method to be implemented by subclasses.
+    It is called when the the GameObject needs to be updated
+     */
     public abstract void update();
 
-    // Other common methods
 }

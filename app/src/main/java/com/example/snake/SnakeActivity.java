@@ -1,3 +1,11 @@
+/*
+Savannah Birdsong-See
+Steven Graham
+
+CSC 133 - Assignment 3
+Snake Game
+ */
+
 package com.example.snake;
 
 import android.app.Activity;
@@ -7,12 +15,13 @@ import android.util.Log;
 import android.view.Display;
 
 public class SnakeActivity extends Activity {
-
     // Declare an instance of SnakeGame
     SnakeGame mSnakeGame;
     boolean mWasGamePaused;
 
-    // Set the game up
+    /*
+    Setting up the game
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +41,9 @@ public class SnakeActivity extends Activity {
         mSnakeGame.addPauseButton(this);
     }
 
-    // Start the thread in snakeEngine
+    /*
+     Start the thread in SnakeEngine
+     */
     @Override
     protected void onResume() {
         Log.d("SnakeActivity.java", "onResume()");
@@ -45,17 +56,16 @@ public class SnakeActivity extends Activity {
         }
     }
 
-        // Stop the thread in snakeEngine
-        @Override
-        protected void onPause () {
-            Log.d("SnakeActivity.java", "onPause()");
-            super.onPause();
-            // Pause the game
-            if (mSnakeGame != null) {
-                mSnakeGame.pause();
-                mWasGamePaused = true;
-            }
+    /*
+     Stop the thread in SnakeEngine
+     */
+    @Override
+    protected void onPause() {
+        Log.d("SnakeActivity.java", "onPause()");
+        super.onPause();
+        if (mSnakeGame != null) {
+            mSnakeGame.pause();
+            mWasGamePaused = true;
         }
-
-
     }
+}
