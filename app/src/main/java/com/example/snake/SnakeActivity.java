@@ -13,11 +13,12 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.Window;
 
 public class SnakeActivity extends Activity {
     // Declare an instance of SnakeGame
     SnakeGame mSnakeGame;
-    boolean mWasGamePaused;
+    boolean mWasGamePaused = true;
 
     /*
     Setting up the game
